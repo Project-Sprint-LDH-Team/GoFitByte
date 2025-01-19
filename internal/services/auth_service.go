@@ -16,7 +16,7 @@ func NewAuthService(repo *repositories.AuthRepository) *AuthService {
 }
 
 // register new user
-func (s *AuthService) Register(user *models.AuthRequest) error {
+func (s *AuthService) Register(user *models.AuthRequest, userID string) error {
 	// check email already registered
 	existingUser, err := s.repo.FindUserByEmail(user.Email)
 	if err != nil {
@@ -28,28 +28,28 @@ func (s *AuthService) Register(user *models.AuthRequest) error {
 	// Hash password before to store on db
 	user.Password = utils.HashPassword(user.Password)
 	// Store user on db
-	return s.repo.Register(user)
+	return s.repo.Register(user, userID)
 }
 
 // Check credentials and return token
-func (s *AuthService) Login(email, password string) (*models.AuthResponse, error) {
-	// Find user based on email
-	user, err := s.repo.FindUserByEmail(email)
-	if err != nil {
-		return nil, err
-	}
-	if user == nil {
-		return nil, errors.New("email not found")
-	}
-	// Password verification
-	if !utils.VerifyPassword(user.Password, password) {
-		return nil, errors.New("invalid password")
-	}
+// func (s *AuthService) Login(email, password string) (*models.AuthResponse, error) {
+// 	// Find user based on email
+// 	user, err := s.repo.FindUserByEmail(email)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	if user == nil {
+// 		return nil, errors.New("email not found")
+// 	}
+// 	// Password verification
+// 	if !utils.VerifyPassword(user.Password, password) {
+// 		return nil, errors.New("invalid password")
+// 	}
 
-	// Generate token
-	token := utils.GenerateToken()
-	return &models.AuthResponse{
-		Email: user.Email,
-		Token: token,
-	}, nil
-}
+// 	// Generate token
+// 	token := utils.GenerateToken()
+// 	return &models.AuthResponse{
+// 		Email: user.Email,
+// 		Token: token,
+// 	}, nil
+// }

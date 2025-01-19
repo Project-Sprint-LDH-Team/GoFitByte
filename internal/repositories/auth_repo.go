@@ -3,8 +3,6 @@ package repositories
 import (
 	"database/sql"
 	"fit-byte-go/internal/models"
-
-	"github.com/google/uuid"
 )
 
 type AuthRepository struct {
@@ -16,9 +14,9 @@ func NewAuthRepository(db *sql.DB) *AuthRepository {
 }
 
 // Register user to store on db
-func (r *AuthRepository) Register(user *models.AuthRequest) error {
+func (r *AuthRepository) Register(user *models.AuthRequest, userID string) error {
 	query := `INSERT INTO users (id, email, password) VALUES ($1, $2, $3)`
-	_, err := r.db.Exec(query, uuid.New().String(), user.Email, user.Password)
+	_, err := r.db.Exec(query, userID, user.Email, user.Password)
 	if err != nil {
 		return err
 	}

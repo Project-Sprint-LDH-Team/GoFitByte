@@ -23,8 +23,13 @@ func HashPassword(password string) string {
 	return hex.EncodeToString(hash[:])
 }
 
+// check password match
+func VerifyPassword(hashedPassword, password string) bool {
+	return HashPassword(password) == hashedPassword
+}
+
 // to check what is password match with hash
-func VerifyPassword(tokenString string) (*Claims, error) {
+func VerifyToken(tokenString string) (*Claims, error) {
 	// parse token
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(t *jwt.Token) (interface{}, error) {
 		// make sure signing that we use is HS256

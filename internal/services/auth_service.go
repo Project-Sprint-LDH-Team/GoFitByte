@@ -32,24 +32,24 @@ func (s *AuthService) Register(user *models.AuthRequest, userID string) error {
 }
 
 // Check credentials and return token
-// func (s *AuthService) Login(email, password string) (*models.AuthResponse, error) {
-// 	// Find user based on email
-// 	user, err := s.repo.FindUserByEmail(email)
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	if user == nil {
-// 		return nil, errors.New("email not found")
-// 	}
-// 	// Password verification
-// 	if !utils.VerifyPassword(user.Password, password) {
-// 		return nil, errors.New("invalid password")
-// 	}
+func (s *AuthService) Login(email, password string) (string, error) {
+	// Find user based on email
+	user, err := s.repo.FindUserByEmail(email)
+	if err != nil {
+		return "", err
+	}
+	if user == nil {
+		return "", errors.New("email not found")
+	}
 
-// 	// Generate token
-// 	token := utils.GenerateToken()
-// 	return &models.AuthResponse{
-// 		Email: user.Email,
-// 		Token: token,
-// 	}, nil
-// }
+	if !utils.VerifyPassword(user.Password, password) {
+		return "", errors.New("invalid password")
+	}
+
+	// Generate token
+	token, err := utils.GenerateToken(user.ID)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
+}

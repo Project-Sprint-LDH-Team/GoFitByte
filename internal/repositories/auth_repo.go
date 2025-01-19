@@ -23,11 +23,13 @@ func (r *AuthRepository) Register(user *models.AuthRequest, userID string) error
 	return nil
 }
 
-func (r *AuthRepository) FindUserByEmail(email string) (*models.AuthRequest, error) {
-	var user models.AuthRequest
-	query := `SELECT email FROM users WHERE email = $1`
+func (r *AuthRepository) FindUserByEmail(email string) (*models.User, error) {
+	var user models.User
+	query := `SELECT id,email,password FROM users WHERE email = $1`
 	err := r.db.QueryRow(query, email).Scan(
+		&user.ID,
 		&user.Email,
+		&user.Password,
 	)
 	if err != nil {
 		if err == sql.ErrNoRows {

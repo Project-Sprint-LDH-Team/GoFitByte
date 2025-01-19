@@ -25,6 +25,7 @@ func main() {
 	r := gin.Default()
 
 	r.POST("/api/v1/register", authHandler.Register)
+	r.POST("/api/v1/login", authHandler.Login)
 
 	if err := r.Run(":8080"); err != nil {
 		log.Fatalf("could not start server %v", err)

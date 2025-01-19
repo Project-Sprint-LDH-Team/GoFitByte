@@ -18,19 +18,19 @@ const (
 )
 
 type User struct {
-	ID         string         `json:"id"`
-	Email      string         `json:"email" binding:"required,email,unique"`
-	Password   string         `json:"-"`
-	Name       string         `json:"name" binding:"omitempty,min=2,max=100"`
-	ImageUri   string         `json:"image_uri"`
-	Preference PreferenceType `json:"preference" binding:"required,oneof=CARDIO WEIGHT"`
-	WeightUnit WeightUnit     `json:"weight_unit" binding:"required,oneof=KG LBS"`
-	HeightUnit HeightUnit     `json:"height_unit" binding:"required,oneof=CM INCH"`
-	Weight     int16          `json:"weight" binding:"required,min=10,max=1000"`
-	Height     int16          `json:"height" binding:"required,min=10,max=1000"`
-	CreatedAt  time.Time      `json:"created_at"`
-	UpdatedAt  time.Time      `json:"updated_at"`
-	Activities []Activity     `json:"-"` // Relasi one-to-many ke activities
+	ID         string     `json:"id"`
+	Email      string     `json:"email" binding:"omitempty,email,unique"`
+	Password   string     `json:"-"`
+	Name       string     `json:"name" binding:"omitempty,min=2,max=100"`
+	ImageUri   string     `json:"image_uri"`
+	Preference string     `json:"preference" binding:"required,oneof=CARDIO WEIGHT"`
+	WeightUnit string     `json:"weight_unit" binding:"required,oneof=KG LBS"`
+	HeightUnit string     `json:"height_unit" binding:"required,oneof=CM INCH"`
+	Weight     int16      `json:"weight" binding:"required,min=10,max=1000"`
+	Height     int16      `json:"height" binding:"required,min=10,max=1000"`
+	CreatedAt  time.Time  `json:"created_at"`
+	UpdatedAt  time.Time  `json:"updated_at"`
+	Activities []Activity `json:"-"` // Relasi one-to-many ke activities
 
 }
 
@@ -43,3 +43,14 @@ type AuthResponse struct {
 	Email string `json:"email"`
 	Token string `json:"token"`
 }
+
+// type UserReponse struct {
+// 	Email      string `json:"email"`
+// 	Name       string `json:"name"`
+// 	ImageUri   string `json:"image_uri"`
+// 	Preference string `json:"preference"`
+// 	WeightUnit string `json:"weight_unit"`
+// 	HeightUnit string `json:"height_unit"`
+// 	Weight     int16  `json:"weight"`
+// 	Height     int16  `json:"height"`
+// }

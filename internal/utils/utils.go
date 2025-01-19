@@ -4,7 +4,6 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
-	"log"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -65,7 +64,6 @@ func GenerateToken(userID string) (string, error) {
 	// signing token with secret key
 	tokenString, err := token.SignedString(JWTSecret)
 	if err != nil {
-		log.Fatalf("tokenString %v", err)
 		return "", err
 	}
 	return tokenString, nil

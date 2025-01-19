@@ -34,7 +34,7 @@ func Init() (*sql.DB, error) {
 	}
 
 	//close db connection
-	// defer db.Close()
+	defer db.Close()
 
 	// connection test
 	if err := db.Ping(); err != nil {

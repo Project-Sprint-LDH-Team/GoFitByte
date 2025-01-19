@@ -3,7 +3,6 @@ package handlers
 import (
 	"fit-byte-go/internal/models"
 	"fit-byte-go/internal/services"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -30,7 +29,6 @@ func (h *UserHandler) UpdateUser(c *gin.Context) {
 
 	var requestBody models.User
 	if err := c.ShouldBindJSON(&requestBody); err != nil {
-		log.Fatalf("test %v", err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -62,7 +60,6 @@ func (h *UserHandler) GetUser(c *gin.Context) {
 	// get user data
 	user, err := h.service.GetUserByID(userID.(string))
 	if err != nil {
-		log.Fatalln("err %v", err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to get user data"})
 		return
 	}
